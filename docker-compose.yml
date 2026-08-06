@@ -1,0 +1,44 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: damagescope-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - sqlite_data:/backend/data
+      - uploads_data:/backend/uploads
+      - ./backend/models:/backend/models
+      - ./backend/inference.py:/backend/inference.py
+      - ./backend/main.py:/backend/main.py
+    environment:
+      - DATA_DIR=/backend/data
+      - UPLOAD_DIR=/backend/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: damagescope-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+
+  nginx:
+    image: nginx:alpine
+    container_name: damagescope-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  sqlite_data:
+  uploads_data:

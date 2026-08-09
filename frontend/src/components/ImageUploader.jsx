@@ -52,10 +52,10 @@ export default function ImageUploader({ onStartAssessment, onStartSample, isProc
         <div>
           <h2 className="text-lg font-bold tracking-tight text-white flex items-center gap-2 font-mono">
             <Upload className="w-5 h-5 text-cyan-400" />
-            SATELLITE IMAGE INGESTION CONSOLE
+            SATELLITE IMAGE UPLOAD CONSOLE
           </h2>
           <p className="text-xs text-slate-400 font-mono mt-0.5">
-            Select or drag 1024x1024 Pre & Post disaster satellite PNGs for ONNX tensor processing.
+            Select or drag 1024x1024 Pre & Post disaster satellite images for neural building segmentation and damage classification.
           </p>
         </div>
 
@@ -189,7 +189,7 @@ export default function ImageUploader({ onStartAssessment, onStartSample, isProc
             className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-mono text-xs font-bold rounded-lg tracking-wider shadow-lg shadow-cyan-950/50 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
           >
             <ShieldCheck className="w-4 h-4" />
-            {isProcessing ? 'PROCESSING INFERENCE...' : 'RUN DAMAGE INFERENCE ASSESSMENT'}
+            {isProcessing ? 'PROCESSING ASSESSMENT...' : 'RUN SATELLITE DAMAGE ASSESSMENT'}
           </button>
         </div>
       </form>

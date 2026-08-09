@@ -79,10 +79,10 @@ export default function OverlayViewer({ preImageUrl, postImageUrl, buildings = [
         <div>
           <h2 className="text-lg font-bold tracking-tight text-white flex items-center gap-2 font-mono">
             <Layers className="w-5 h-5 text-cyan-400" />
-            VECTOR OVERLAY INTERACTIVE VIEWER
+            INTERACTIVE BUILDING DAMAGE MAP
           </h2>
           <p className="text-xs text-slate-400 font-mono mt-0.5">
-            Hover or click polygon contours to inspect building ID and classification logits.
+            Hover or click vector building contours to inspect structure ID and damage classification confidence.
           </p>
         </div>
 
@@ -223,7 +223,7 @@ export default function OverlayViewer({ preImageUrl, postImageUrl, buildings = [
             <h3 className="text-sm font-bold font-mono text-white flex items-center justify-between pb-3 border-b border-slate-800">
               <span className="flex items-center gap-2">
                 <Crosshair className="w-4 h-4 text-cyan-400" />
-                STRUCTURE INSPECTOR
+                BUILDING INSPECTOR
               </span>
               {activeBuilding && (
                 <span className="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-bold">
@@ -261,7 +261,7 @@ export default function OverlayViewer({ preImageUrl, postImageUrl, buildings = [
 
                 {/* Bounding Box Coordinates */}
                 <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 mb-4 text-xs text-slate-300">
-                  <span className="text-[10px] text-slate-500 uppercase block mb-1">BOUNDING BOX TENSOR BBOX:</span>
+                  <span className="text-[10px] text-slate-500 uppercase block mb-1">BOUNDING BOX (1024x1024):</span>
                   <div className="grid grid-cols-2 gap-2 text-slate-400">
                     <div>Xmin: <span className="text-white font-bold">{activeBuilding.bbox[0]}</span></div>
                     <div>Ymin: <span className="text-white font-bold">{activeBuilding.bbox[1]}</span></div>
@@ -270,10 +270,10 @@ export default function OverlayViewer({ preImageUrl, postImageUrl, buildings = [
                   </div>
                 </div>
 
-                {/* Classification Logits Probability Breakdown */}
+                {/* Classification Probability Breakdown */}
                 <div className="space-y-3">
                   <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-semibold">
-                    CLASSIFICATION MODEL SOFTMAX PROBABILITIES:
+                    DAMAGE SEVERITY CONFIDENCE BREAKDOWN:
                   </span>
 
                   {Object.entries(activeBuilding.confidences || {}).map(([clsKey, prob]) => {

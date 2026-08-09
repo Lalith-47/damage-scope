@@ -7,19 +7,35 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: #060913;
-    color: #f1f5f9;
+    transition: background-color 0.3s ease, color 0.3s ease;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     overflow-x: hidden;
+  }
+
+  html.dark body {
+    background-color: #060913;
+    color: #f1f5f9;
+  }
+
+  html.light body {
+    background-color: #f8fafc;
+    color: #0f172a;
   }
 }
 
 /* Background Blueprint & Mesh Texture Effects */
-.blueprint-grid {
+html.dark .blueprint-grid {
   background-size: 40px 40px;
   background-image: 
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+html.light .blueprint-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
 }
 
 .mesh-gradient-bg {
@@ -29,58 +45,139 @@
     radial-gradient(circle at 50% 85%, rgba(14, 165, 233, 0.08) 0%, transparent 55%);
 }
 
-.glow-orb-cyan {
+/* Glow Orbs */
+html.dark .glow-orb-cyan {
   background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, transparent 70%);
   filter: blur(50px);
 }
+html.light .glow-orb-cyan {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.20) 0%, transparent 70%);
+  filter: blur(50px);
+}
 
-.glow-orb-amber {
+html.dark .glow-orb-amber {
   background: radial-gradient(circle, rgba(249, 115, 22, 0.35) 0%, transparent 70%);
+  filter: blur(50px);
+}
+html.light .glow-orb-amber {
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.20) 0%, transparent 70%);
   filter: blur(50px);
 }
 
 /* High Contrast SaaS Gradient Text */
-.text-gradient-cyan {
+html.dark .text-gradient-cyan {
   background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #06b6d4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
-.text-gradient-amber {
-  background: linear-gradient(135deg, #ffffff 0%, #fb923c 50%, #f97316 100%);
+html.light .text-gradient-cyan {
+  background: linear-gradient(135deg, #0f172a 0%, #0284c7 50%, #0369a1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-white {
+html.dark .text-gradient-amber {
+  background: linear-gradient(135deg, #ffffff 0%, #fb923c 50%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+html.light .text-gradient-amber {
+  background: linear-gradient(135deg, #0f172a 0%, #d97706 50%, #ea580c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html.dark .text-gradient-white {
   background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+html.light .text-gradient-white {
+  background: linear-gradient(180deg, #0f172a 0%, #334155 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Glassmorphism Premium Card */
-.glass-card {
+html.dark .glass-card {
   background: rgba(11, 17, 32, 0.7);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
 }
+html.light .glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
+}
 
 .glass-card-hover {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.glass-card-hover:hover {
+html.dark .glass-card-hover:hover {
   transform: translateY(-4px);
   border-color: rgba(6, 182, 212, 0.4);
   box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.15);
 }
+html.light .glass-card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(2, 132, 199, 0.5);
+  box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.15);
+}
 
 /* Tactical Glass Panel Effect */
-.tactical-card {
+html.dark .tactical-card {
   background: rgba(11, 17, 32, 0.85);
   border: 1px solid rgba(51, 65, 85, 0.6);
   box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(12px);
+}
+html.light .tactical-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+/* Light mode text & background adaptors */
+html.light .text-white {
+  color: #0f172a !important;
+}
+html.light .text-slate-100 {
+  color: #0f172a !important;
+}
+html.light .text-slate-200 {
+  color: #1e293b !important;
+}
+html.light .text-slate-300 {
+  color: #334155 !important;
+}
+html.light .text-slate-400 {
+  color: #475569 !important;
+}
+html.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+html.light .bg-slate-950 {
+  background-color: #f1f5f9 !important;
+}
+html.light .bg-slate-900 {
+  background-color: #ffffff !important;
+}
+html.light .bg-slate-850 {
+  background-color: #f8fafc !important;
+}
+html.light .bg-slate-800 {
+  background-color: #e2e8f0 !important;
+}
+
+html.light .border-slate-800 {
+  border-color: #cbd5e1 !important;
+}
+html.light .border-slate-700 {
+  border-color: #94a3b8 !important;
 }
 
 /* Radar Scan Line Animation */
@@ -99,13 +196,20 @@
   width: 7px;
   height: 7px;
 }
-::-webkit-scrollbar-track {
+html.dark ::-webkit-scrollbar-track {
   background: #060913;
 }
-::-webkit-scrollbar-thumb {
+html.light ::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+html.dark ::-webkit-scrollbar-thumb {
   background: #1c283f;
   border-radius: 4px;
 }
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
 ::-webkit-scrollbar-thumb:hover {
-  background: #324669;
+  background: #0284c7;
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Layers, Cpu, ArrowRight, Activity, Terminal } from 'lucide-react';
+import { Shield, Layers, Cpu, ArrowRight, Activity, Terminal, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function Navbar({ onLaunchConsole, activeView, setActiveView }) {
+export default function Navbar({ onLaunchConsole, activeView, setActiveView, theme = 'dark', onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -54,12 +54,12 @@ export default function Navbar({ onLaunchConsole, activeView, setActiveView }) {
                 <span className="text-lg font-black tracking-wider text-white font-mono">
                   DAMAGE<span className="text-cyan-400">SCOPE</span>
                 </span>
-                <span className="px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-800/80 text-[10px] font-mono font-bold uppercase tracking-widest">
-                  v1.0 xBD
+                <span className="px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-800/80 text-[10px] font-mono font-bold uppercase tracking-widest">
+                  CAPSTONE
                 </span>
               </div>
               <p className="text-[10px] text-slate-400 font-mono tracking-tight hidden sm:block">
-                AI SATELLITE BUILDING DAMAGE ASSESSMENT
+                Satellite Disaster Intelligence Platform
               </p>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function Navbar({ onLaunchConsole, activeView, setActiveView }) {
               onClick={() => scrollToSection('features')}
               className="hover:text-cyan-400 transition-colors py-1 relative group"
             >
-              FEATURES
+              CAPABILITIES
               <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
             </button>
 
@@ -78,7 +78,7 @@ export default function Navbar({ onLaunchConsole, activeView, setActiveView }) {
               onClick={() => scrollToSection('how-it-works')}
               className="hover:text-cyan-400 transition-colors py-1 relative group"
             >
-              HOW IT WORKS
+              WORKFLOW
               <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
             </button>
 
@@ -94,7 +94,7 @@ export default function Navbar({ onLaunchConsole, activeView, setActiveView }) {
               onClick={() => scrollToSection('stats')}
               className="hover:text-cyan-400 transition-colors py-1 relative group"
             >
-              TELEMETRY & REVIEWS
+              BENCHMARKS
               <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
             </button>
           </nav>
@@ -103,8 +103,22 @@ export default function Navbar({ onLaunchConsole, activeView, setActiveView }) {
           <div className="flex items-center gap-3">
             <div className="hidden lg:flex items-center gap-2 font-mono text-[11px] text-slate-400 bg-slate-900/90 px-3 py-1.5 rounded-lg border border-slate-800">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>ONNX CPU ENGINE</span>
+              <span>Inference Engine Ready</span>
             </div>
+
+            {/* Theme Toggle Button */}
+            <button
+              onClick={onToggleTheme}
+              className="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-amber-400 transition-all flex items-center justify-center cursor-pointer shadow-md"
+              title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+              aria-label="Toggle Theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-amber-400 hover:rotate-45 transition-transform" />
+              ) : (
+                <Moon className="w-4 h-4 text-cyan-600 hover:scale-110 transition-transform" />
+              )}
+            </button>
 
             <button
               onClick={onLaunchConsole}
@@ -113,7 +127,7 @@ export default function Navbar({ onLaunchConsole, activeView, setActiveView }) {
               <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-600 to-amber-500 rounded-xl group-hover:opacity-90 transition-opacity" />
               <span className="relative px-4 py-2 bg-slate-950 rounded-[11px] flex items-center gap-2 text-white group-hover:bg-slate-900 transition-colors">
                 <Terminal className="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
-                <span>LAUNCH AI CONSOLE</span>
+                <span>OPEN CONSOLE</span>
                 <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
               </span>
             </button>

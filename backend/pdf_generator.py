@@ -62,7 +62,7 @@ def generate_pdf_report(assessment_data: dict, pre_image_path: str = None, post_
     elements = []
 
     # Title & Subtitle Header
-    elements.append(Paragraph("DAMAGESCOPE | SATELLITE DISASTER ASSESSMENT REPORT", title_style))
+    elements.append(Paragraph("DAMAGESCOPE &bull; SATELLITE DISASTER ASSESSMENT REPORT", title_style))
     job_id = assessment_data.get("job_id", "N/A")
     created_at = assessment_data.get("created_at", "N/A")
     elements.append(Paragraph(f"JOB ID: {job_id} &nbsp;|&nbsp; TIMESTAMP: {created_at} UTC &nbsp;|&nbsp; STATUS: COMPLETED", subtitle_style))
@@ -97,7 +97,7 @@ def generate_pdf_report(assessment_data: dict, pre_image_path: str = None, post_
     )
 
     banner_content = [
-        [Paragraph(f"TACTICAL ASSESSMENT: {zone_title.upper()}", risk_banner_style)],
+        [Paragraph(f"RISK ZONE EVALUATION: {zone_title.upper()}", risk_banner_style)],
         [Paragraph(f"PRIMARY ACTION FOCUS: <b>{priority}</b>", priority_style)]
     ]
 

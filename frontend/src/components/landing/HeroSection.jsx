@@ -44,21 +44,21 @@ export default function HeroSection({ onLaunchConsole, onRunSample }) {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
               </span>
               <span className="font-mono text-xs font-bold text-cyan-300 tracking-wider uppercase">
-                PRODUCTION ONNX NEURAL INFERENCE ENGINE
+                SAMSUNG CAPSTONE PROJECT &bull; DISASTER RESPONSE
               </span>
             </div>
 
             {/* Main Confident Headline */}
             <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
-              Instant AI Satellite <br />
+              Automated Satellite <br />
               <span className="text-gradient-amber">Building Damage</span> <br />
               Assessment System.
             </h1>
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Detects, tracks, and scores structural disaster impact across satellite imagery. 
-              Powered by dual-stage UNet neural segmentation models, xBD 4-tier damage classification, 
+              Rapidly detects, segments, and classifies structural damage across post-disaster satellite imagery. 
+              Powered by dual-stage UNet neural networks, xBD 4-tier severity taxonomy, 
               and automated disaster PDF report generation.
             </p>
 
@@ -69,7 +69,7 @@ export default function HeroSection({ onLaunchConsole, onRunSample }) {
                 className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-amber-500 text-white font-mono text-sm font-bold shadow-xl shadow-cyan-950/60 hover:shadow-cyan-500/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 group cursor-pointer"
               >
                 <Zap className="w-5 h-5 text-amber-300 group-hover:animate-bounce" />
-                <span>LAUNCH AI CONSOLE</span>
+                <span>OPEN ASSESSMENT CONSOLE</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
@@ -86,15 +86,15 @@ export default function HeroSection({ onLaunchConsole, onRunSample }) {
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80 font-mono">
               <div>
                 <div className="text-xl sm:text-2xl font-black text-white">1024x1024</div>
-                <div className="text-[11px] text-slate-400">Tensor Resolution</div>
+                <div className="text-[11px] text-slate-400">Satellite Imagery</div>
               </div>
               <div>
                 <div className="text-xl sm:text-2xl font-black text-cyan-400">85.2%</div>
-                <div className="text-[11px] text-slate-400">Classification Acc</div>
+                <div className="text-[11px] text-slate-400">xBD Accuracy</div>
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-black text-amber-400">&lt; 1.2s</div>
-                <div className="text-[11px] text-slate-400">CPU Latency</div>
+                <div className="text-xl sm:text-2xl font-black text-amber-400">&lt; 1.5s</div>
+                <div className="text-[11px] text-slate-400">Inference Latency</div>
               </div>
             </div>
           </motion.div>

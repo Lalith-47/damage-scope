@@ -28,6 +28,26 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [polling, setPolling] = useState(false);
 
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('damagescope_theme') || 'dark';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'light') {
+      root.classList.remove('dark');
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+      root.classList.add('dark');
+    }
+    localStorage.setItem('damagescope_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   // Polling hook for active job ID
   useEffect(() => {
     if (!activeJobId || jobStatus === 'completed' || jobStatus === 'failed') {
@@ -113,12 +133,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060913] text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
+    <div className={`min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black transition-colors duration-300 ${
+      theme === 'dark' ? 'bg-[#060913] text-slate-100' : 'bg-slate-50 text-slate-900'
+    }`}>
       {/* Sticky SaaS Navbar */}
       <Navbar
         onLaunchConsole={handleLaunchConsole}
         activeView={activeView}
         setActiveView={setActiveView}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       {/* VIEW A: LANDING PAGE EXPERIENCE */}
@@ -152,7 +176,7 @@ export default function App() {
                   <span>BACK TO LANDING</span>
                 </button>
                 <div className="h-4 w-[1px] bg-slate-800" />
-                <span className="font-mono text-xs text-slate-400">TACTICAL INFERENCE CONSOLE</span>
+                <span className="font-mono text-xs text-slate-400">SATELLITE ASSESSMENT CONSOLE</span>
               </div>
 
               {/* Console Sub-Navigation Tabs */}
@@ -206,10 +230,10 @@ export default function App() {
                     <RefreshCw className="w-5 h-5 text-cyan-400 animate-spin" />
                     <div>
                       <h3 className="text-sm font-bold text-cyan-300">
-                        ONNX INFERENCE ENGINE EXECUTING...
+                        SATELLITE ASSESSMENT IN PROGRESS...
                       </h3>
                       <p className="text-xs text-slate-400">
-                        Processing 1024x1024 satellite tensors & dual-stage UNet damage classification [Job #{activeJobId?.slice(0, 8)}]
+                        Processing 1024x1024 satellite imagery tensors & dual-stage UNet building damage classification [Job #{activeJobId?.slice(0, 8)}]
                       </p>
                     </div>
                   </div>

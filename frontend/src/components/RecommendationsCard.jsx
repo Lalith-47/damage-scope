@@ -51,7 +51,7 @@ export default function RecommendationsCard({ recommendations = {}, jobId = '', 
               <span className={`px-2.5 py-0.5 rounded text-[11px] font-mono font-bold uppercase border ${badgeColor}`}>
                 {recommendations.zone_level || level} RISK ZONE
               </span>
-              <span className="text-xs text-slate-500 font-mono">AUTOMATED RULE ENGINE</span>
+              <span className="text-xs text-slate-500 font-mono">RULE-BASED DIRECTIVE ENGINE</span>
             </div>
             <h3 className="text-base font-extrabold text-white font-mono mt-1">
               {recommendations.title || `${level} Structural Impact Assessment`}
@@ -65,14 +65,14 @@ export default function RecommendationsCard({ recommendations = {}, jobId = '', 
           className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-800 to-slate-750 hover:from-slate-750 hover:to-slate-700 text-white font-mono text-xs font-bold rounded-lg border border-slate-600 hover:border-slate-400 transition-all shadow-md"
         >
           <Download className="w-4 h-4 text-cyan-400" />
-          {downloading ? 'GENERATING PDF...' : 'EXPORT DISASTER PDF REPORT'}
+          {downloading ? 'GENERATING PDF...' : 'DOWNLOAD PDF REPORT'}
         </button>
       </div>
 
       {/* Primary Action Priority Directive */}
       <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 mb-6 font-mono">
         <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold mb-1">
-          TACTICAL PRIORITY FOCUS DIRECTIVE:
+          DISASTER RESPONSE PRIORITY FOCUS:
         </span>
         <p className="text-sm font-bold text-cyan-300">
           {recommendations.priority || 'Standard Recovery Operations'}
@@ -82,7 +82,7 @@ export default function RecommendationsCard({ recommendations = {}, jobId = '', 
       {/* Recommended Recovery Steps List */}
       <div>
         <h4 className="text-xs font-mono font-bold uppercase text-slate-400 tracking-wider mb-3">
-          ACTIONABLE RECOVERY RECOMMENDATIONS:
+          ACTIONABLE RECOVERY DIRECTIVES:
         </h4>
         <div className="space-y-3">
           {(recommendations.recommendations || []).map((recText, idx) => (

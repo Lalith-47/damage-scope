@@ -55,10 +55,10 @@ export default function AssessmentHistory({ onLoadAssessment }) {
         <div>
           <h2 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
             <History className="w-5 h-5 text-cyan-400" />
-            HISTORICAL ASSESSMENT LOGS
+            ASSESSMENT HISTORY
           </h2>
           <p className="text-xs text-slate-400 mt-0.5">
-            Persisted satellite assessment jobs stored in SQLite database.
+            Historical satellite assessment jobs persisted in database.
           </p>
         </div>
 

@@ -3,12 +3,12 @@ import { Shield, Building2, Radio, Globe, Navigation, Award, Cpu } from 'lucide-
 
 const AGENCIES = [
   { name: "FEMA EMERGENCY OPS", icon: Shield },
-  { name: "UN OCHA DISASTER WATCH", icon: Globe },
-  { name: "GLOBAL RELIEF NET", icon: Radio },
-  { name: "MUNICIPAL RISK DEPT", icon: Building2 },
+  { name: "UN OCHA DISASTER RELIEF", icon: Globe },
+  { name: "COPERNICUS EMS", icon: Radio },
+  { name: "MAXAR GEOSPATIAL", icon: Navigation },
   { name: "RED CROSS TASKFORCE", icon: Award },
-  { name: "SATELLITE GEO OPS", icon: Navigation },
-  { name: "ONNX RUNTIME LABS", icon: Cpu }
+  { name: "PLANET LABS IMAGERY", icon: Building2 },
+  { name: "SAMSUNG CAPSTONE LABS", icon: Cpu }
 ];
 
 export default function LogoMarquee() {
@@ -16,7 +16,7 @@ export default function LogoMarquee() {
     <section className="py-10 border-y border-slate-800/80 bg-slate-950/80 backdrop-blur-md relative overflow-hidden font-mono">
       <div className="max-w-7xl mx-auto px-4 mb-4 text-center">
         <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">
-          TRUSTED BY GLOBAL DISASTER RESPONSE TEAMS & MUNICIPAL EMERGENCY AGENCIES
+          DESIGNED FOR EMERGENCY RESPONSE AGENCIES & GEOSPATIAL ASSESSMENTS
         </span>
       </div>
 

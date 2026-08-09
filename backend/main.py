@@ -113,53 +113,66 @@ def run_inference_background(job_id: str, pre_path: str, post_path: str):
 
 
 def generate_sample_satellite_pair() -> tuple[str, str]:
-    """Generates synthetic 1024x1024 satellite pre/post image pair for easy testing."""
+    """Generates synthetic 1024x1024 satellite pre/post image pair for testing."""
     sample_pre_path = os.path.join(UPLOAD_DIR, "sample_pre.png")
     sample_post_path = os.path.join(UPLOAD_DIR, "sample_post.png")
 
-    if not (os.path.exists(sample_pre_path) and os.path.exists(sample_post_path)):
-        width, height = 1024, 1024
-        
-        # Pre-disaster background (terrain green)
-        pre_img = Image.new("RGB", (width, height), color=(40, 80, 55))
-        draw_pre = ImageDraw.Draw(pre_img)
-        
-        # Draw roads and terrain grid
-        draw_pre.rectangle([0, 480, 1024, 520], fill=(120, 120, 120))
-        draw_pre.rectangle([480, 0, 520, 1024], fill=(120, 120, 120))
+    import numpy as np
+    np.random.seed(42)
+    width, height = 1024, 1024
+    
+    # Base terrain green with texture
+    pre_arr = np.zeros((height, width, 3), dtype=np.uint8)
+    pre_arr[:, :, 0] = np.clip(np.random.normal(50, 8, (height, width)), 0, 255)
+    pre_arr[:, :, 1] = np.clip(np.random.normal(90, 10, (height, width)), 0, 255)
+    pre_arr[:, :, 2] = np.clip(np.random.normal(60, 8, (height, width)), 0, 255)
 
-        # Post-disaster background (charred / damaged terrain)
-        post_img = Image.new("RGB", (width, height), color=(50, 45, 40))
-        draw_post = ImageDraw.Draw(post_img)
-        draw_post.rectangle([0, 480, 1024, 520], fill=(90, 85, 80))
-        draw_post.rectangle([480, 0, 520, 1024], fill=(90, 85, 80))
+    post_arr = pre_arr.copy()
+    
+    # Road network
+    pre_arr[490:530, :, :] = 120
+    pre_arr[:, 490:530, :] = 120
+    post_arr[490:530, :, :] = 95
+    post_arr[:, 490:530, :] = 95
 
-        # Draw 12 building blocks
-        spacing_x = 1024 // 5
-        spacing_y = 1024 // 4
+    pre_img = Image.fromarray(pre_arr)
+    post_img = Image.fromarray(post_arr)
+    
+    draw_pre = ImageDraw.Draw(pre_img)
+    draw_post = ImageDraw.Draw(post_img)
 
-        for r in range(1, 4):
-            for c in range(1, 5):
-                cx, cy = spacing_x * c, spacing_y * r
-                w, h = 80, 70
-                rect = [cx - w//2, cy - h//2, cx + w//2, cy + h//2]
-                
-                # Pre: pristine roofs
-                draw_pre.rectangle(rect, fill=(180, 60, 50), outline=(220, 220, 220), width=2)
-                
-                # Post: mix of damaged roofs and debris
-                if (r + c) % 3 == 0:
-                    # Destroyed
-                    draw_post.rectangle(rect, fill=(30, 25, 25), outline=(100, 40, 30), width=1)
-                elif (r + c) % 2 == 0:
-                    # Major damage
-                    draw_post.rectangle(rect, fill=(120, 70, 40), outline=(200, 100, 40), width=2)
-                else:
-                    # Minor / intact
-                    draw_post.rectangle(rect, fill=(160, 80, 60), outline=(200, 200, 200), width=2)
+    spacing_x = 1024 // 5
+    spacing_y = 1024 // 4
 
-        pre_img.save(sample_pre_path, "PNG")
-        post_img.save(sample_post_path, "PNG")
+    for r in range(1, 4):
+        for c in range(1, 5):
+            idx = (r - 1) * 4 + (c - 1)
+            cx, cy = spacing_x * c, spacing_y * r
+            w, h = 84, 74
+            rect = [cx - w//2, cy - h//2, cx + w//2, cy + h//2]
+            
+            # Pre: pristine tile roof
+            draw_pre.rectangle(rect, fill=(215, 85, 65), outline=(240, 240, 240), width=3)
+            
+            # Post: multi-category damage patterns
+            pattern = idx % 4
+            if pattern == 0:
+                # No damage
+                draw_post.rectangle(rect, fill=(215, 85, 65), outline=(240, 240, 240), width=3)
+            elif pattern == 1:
+                # Minor damage (slight roof discoloration)
+                draw_post.rectangle(rect, fill=(175, 95, 55), outline=(210, 190, 110), width=2)
+            elif pattern == 2:
+                # Major damage (structural crack & dark crater)
+                draw_post.rectangle(rect, fill=(90, 55, 40), outline=(160, 90, 40), width=2)
+                draw_post.rectangle([cx - w//4, cy - h//4, cx + w//2, cy + h//2], fill=(45, 35, 30))
+            else:
+                # Destroyed (complete rubble & dark ash)
+                draw_post.rectangle(rect, fill=(28, 26, 26), outline=(55, 45, 45), width=1)
+                draw_post.ellipse([cx - w//3, cy - h//3, cx + w//3, cy + h//3], fill=(12, 12, 12))
+
+    pre_img.save(sample_pre_path, "PNG")
+    post_img.save(sample_post_path, "PNG")
 
     return sample_pre_path, sample_post_path
 

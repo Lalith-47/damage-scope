@@ -41,15 +41,27 @@ def run_evaluation():
     for t, p in zip(y_true, y_pred):
         cm[class_to_idx[t]][class_to_idx[p]] += 1
 
+    cm_norm = np.zeros((n_classes, n_classes), dtype=float)
+    for i in range(n_classes):
+        row_sum = np.sum(cm[i, :])
+        if row_sum > 0:
+            cm_norm[i, :] = np.round((cm[i, :] / row_sum) * 100.0, 2)
+
     # --- RAW OUTPUT ---
     print("CLASSES:")
     print(DAMAGE_CLASSES)
 
-    print("\nRAW CONFUSION MATRIX (NumPy Array):")
+    print("\nRAW CONFUSION MATRIX - COUNT (NumPy Array):")
     print(repr(cm))
 
-    print("\nRAW CONFUSION MATRIX (List of Lists):")
+    print("\nRAW CONFUSION MATRIX - COUNT (List of Lists):")
     print(cm.tolist())
+
+    print("\nRAW NORMALIZED CONFUSION MATRIX - PERCENTAGE (NumPy Array %):")
+    print(repr(cm_norm))
+
+    print("\nRAW NORMALIZED CONFUSION MATRIX - PERCENTAGE (List of Lists %):")
+    print(cm_norm.tolist())
 
     print("\nRAW Y_TRUE:")
     print(y_true)
@@ -60,7 +72,8 @@ def run_evaluation():
     print("\nRAW JSON DICT:")
     raw_dict = {
         "classes": DAMAGE_CLASSES,
-        "confusion_matrix": cm.tolist(),
+        "confusion_matrix_count": cm.tolist(),
+        "confusion_matrix_normalized_pct": cm_norm.tolist(),
         "y_true": y_true,
         "y_pred": y_pred
     }

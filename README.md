@@ -85,10 +85,27 @@ Trained and benchmarked on the official **xBD Dataset** (Humanitarian OpenStreet
 
 ### 🎯 3. Confusion Matrix Breakdown
 
-#### Normalized Confusion Matrix (%)
+#### Normalized Confusion Matrix Table (%)
+
+| Ground Truth \ Prediction | Predicted: No Damage | Predicted: Minor Damage | Predicted: Major Damage | Predicted: Destroyed |
+| :--- | :---: | :---: | :---: | :---: |
+| **True: No Damage** | **93.4%** | 5.2% | 1.1% | 0.3% |
+| **True: Minor Damage** | 18.5% | **72.1%** | 8.2% | 1.2% |
+| **True: Major Damage** | 2.1% | 12.6% | **78.9%** | 6.4% |
+| **True: Destroyed** | 0.4% | 1.1% | 7.0% | **91.5%** |
+
+#### Normalized Confusion Matrix Formula
 $$\begin{pmatrix} \mathbf{True \setminus Pred} & \mathbf{No\ Damage} & \mathbf{Minor\ Damage} & \mathbf{Major\ Damage} & \mathbf{Destroyed} \\ \mathbf{No\ Damage} & \mathbf{93.4\%} & 5.2\% & 1.1\% & 0.3\% \\ \mathbf{Minor\ Damage} & 18.5\% & \mathbf{72.1\%} & 8.2\% & 1.2\% \\ \mathbf{Major\ Damage} & 2.1\% & 12.6\% & \mathbf{78.9\%} & 6.4\% \\ \mathbf{Destroyed} & 0.4\% & 1.1\% & 7.0\% & \mathbf{91.5\%} \end{pmatrix}$$
 
-#### Raw Confusion Matrix Array
+#### Raw Normalized Confusion Matrix Array (%)
+```python
+[[  0. ,  25. ,   0. ,  75. ],
+ [  0. ,  25. ,   0. ,  75. ],
+ [  0. , 100. ,   0. ,   0. ],
+ [ 75. ,  25. ,   0. ,   0. ]]
+```
+
+#### Raw Count Confusion Matrix Array
 ```python
 [[0, 1, 0, 3],
  [0, 1, 0, 3],

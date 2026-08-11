@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldAlert, Download, AlertTriangle, CheckCircle, FileText, ArrowRight } from 'lucide-react';
+import { ShieldAlert, Download } from 'lucide-react';
 import { getPDFReportUrl } from '../api';
 
 export default function RecommendationsCard({ recommendations = {}, jobId = '', riskLevel = 'LOW' }) {

@@ -29,7 +29,7 @@ class ModelInferenceEngine:
     def get_instance(cls, models_dir: str = None):
         if cls._instance is None:
             if models_dir is None:
-                models_dir = os.path.join(os.path.dirname(__file__), "models")
+                models_dir = os.getenv("MODELS_DIR", os.path.join(os.path.dirname(__file__), "models"))
             cls._instance = ModelInferenceEngine(models_dir)
         return cls._instance
 

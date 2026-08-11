@@ -1,11 +1,10 @@
 import os
 import uuid
 import json
-import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, BackgroundTasks, Response
+from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
@@ -35,12 +34,12 @@ async def lifespan(app: FastAPI):
     ModelInferenceEngine.get_instance(models_dir)
     yield
 
-app = FastAPI(title="DamageScope API", version="1.0.0", lifespan=lifespan)
+allowed_origins = [origin.strip() for origin in os.getenv("ALLOWED_ORIGINS", "*").split(",") if origin.strip()]
 
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins if allowed_origins else ["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -179,7 +178,6 @@ def generate_sample_satellite_pair() -> tuple[str, str]:
 
 @app.post("/api/assess", response_model=JobStatusResponse)
 async def create_assessment(
-    background_tasks: BackgroundTasks,
     pre_image: UploadFile = File(...),
     post_image: UploadFile = File(...),
     db: Session = Depends(get_db)

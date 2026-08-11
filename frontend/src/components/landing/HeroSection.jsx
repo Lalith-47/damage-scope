@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ShieldAlert, Zap, Layers, Play, CheckCircle2, ArrowRight, Eye, Sparkles, Activity } from 'lucide-react';
+import { Play, ArrowRight, Activity } from 'lucide-react';
 
 export default function HeroSection({ onLaunchConsole, onRunSample }) {
-  const [sliderPos, setSliderPos] = useState(50);
   const [activeTab, setActiveTab] = useState('overlay'); // 'overlay' | 'pre' | 'post'
 
   const { scrollY } = useScroll();

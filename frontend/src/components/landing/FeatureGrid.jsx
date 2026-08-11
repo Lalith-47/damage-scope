@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Cpu, FileCheck, ShieldAlert, Sparkles, MapPin, Wrench, Download } from 'lucide-react';
+import { Layers, Cpu, FileCheck, ShieldAlert, Sparkles, MapPin, Wrench } from 'lucide-react';
 
 const FEATURES = [
   {

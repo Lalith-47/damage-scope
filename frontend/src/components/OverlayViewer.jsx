@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, Layers, Crosshair, ZoomIn, ZoomOut, CheckCircle2 } from 'lucide-react';
+import { Layers, Crosshair } from 'lucide-react';
 
 const DAMAGE_COLOR_MAP = {
   'no-damage': '#22c55e',

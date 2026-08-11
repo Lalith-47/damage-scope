@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Zap, ArrowRight, Terminal, Sparkles } from 'lucide-react';
+import { ArrowRight, Terminal, Sparkles } from 'lucide-react';
 
 export default function CTABanner({ onLaunchConsole }) {
   return (

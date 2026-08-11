@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend
+  PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip
 } from 'recharts';
-import { BarChart3, PieChart as PieIcon, ShieldAlert, Building } from 'lucide-react';
+import { BarChart3, PieChart as PieIcon, Building } from 'lucide-react';
 
 const COLOR_MAP = {
   'No Damage': '#22c55e',
@@ -11,7 +11,7 @@ const COLOR_MAP = {
   'Destroyed': '#ef4444'
 };
 
-export default function DamageCharts({ summary = {}, riskLevel = 'LOW' }) {
+export default function DamageCharts({ summary = {} }) {
   const chartData = [
     { name: 'No Damage', count: summary.no_damage || 0, pct: summary.pct_no_damage || 0 },
     { name: 'Minor Damage', count: summary.minor_damage || 0, pct: summary.pct_minor_damage || 0 },

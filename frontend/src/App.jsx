@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Activity, RefreshCw, AlertTriangle, Layers, BarChart3, History, Cpu, ArrowLeft } from 'lucide-react';
+import { RefreshCw, AlertTriangle, Layers, BarChart3, History, ArrowLeft } from 'lucide-react';
 import ImageUploader from './components/ImageUploader';
 import OverlayViewer from './components/OverlayViewer';
 import DamageCharts from './components/DamageCharts';
@@ -26,7 +26,6 @@ export default function App() {
   const [jobStatus, setJobStatus] = useState(null);       // 'processing' | 'completed' | 'failed'
   const [assessmentData, setAssessmentData] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [polling, setPolling] = useState(false);
 
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('damagescope_theme') || 'dark';
@@ -54,19 +53,16 @@ export default function App() {
       return;
     }
 
-    setPolling(true);
     const interval = setInterval(async () => {
       try {
         const res = await getAssessmentStatus(activeJobId);
         if (res.status === 'completed') {
           setJobStatus('completed');
           setAssessmentData(res.data);
-          setPolling(false);
           clearInterval(interval);
         } else if (res.status === 'failed') {
           setJobStatus('failed');
           setErrorMessage(res.message || 'Assessment processing failed.');
-          setPolling(false);
           clearInterval(interval);
         }
       } catch (err) {

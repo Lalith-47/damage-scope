@@ -1,5 +1,4 @@
 import React from 'react';
-import { Shield, Cpu, Terminal, Github, ExternalLink } from 'lucide-react';
 
 export default function Footer({ onLaunchConsole }) {
   return (

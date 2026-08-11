@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { History, Eye, Download, Trash2, RefreshCw, ShieldAlert, FileText } from 'lucide-react';
+import { History, Eye, Download, Trash2, RefreshCw } from 'lucide-react';
 import { listAssessments, deleteAssessment, getPDFReportUrl } from '../api';
 
 export default function AssessmentHistory({ onLoadAssessment }) {

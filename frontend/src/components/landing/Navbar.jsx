@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Layers, Cpu, ArrowRight, Activity, Terminal, Sun, Moon } from 'lucide-react';
+import { Shield, ArrowRight, Terminal, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Navbar({ onLaunchConsole, activeView, setActiveView, theme = 'dark', onToggleTheme }) {

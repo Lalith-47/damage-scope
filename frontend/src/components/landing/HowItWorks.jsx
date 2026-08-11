@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Upload, Cpu, Eye, FileText, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Upload, Cpu, Eye, FileText, CheckCircle2 } from 'lucide-react';
 
 const STEPS = [
   {

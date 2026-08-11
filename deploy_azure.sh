@@ -4,9 +4,9 @@ set -e
 # Configuration
 RESOURCE_GROUP=${RESOURCE_GROUP:-"damagescope-rg"}
 LOCATION=${LOCATION:-"eastus"}
-ACR_NAME=${ACR_NAME:-"damagescopeacr$RANDOM"}
+ACR_NAME=${ACR_NAME:-"damagescopeacr10994"}
 APP_SERVICE_PLAN=${APP_SERVICE_PLAN:-"damagescope-plan"}
-APP_NAME=${APP_NAME:-"damagescope-app-$RANDOM"}
+APP_NAME=${APP_NAME:-"damagescope-app-10994"}
 
 echo "========================================================"
 echo " Starting Azure Deployment for DamageScope"
@@ -26,12 +26,21 @@ az group create --name "$RESOURCE_GROUP" --location "$LOCATION" --output table
 echo "[2/6] Creating Azure Container Registry '$ACR_NAME'..."
 az acr create --resource-group "$RESOURCE_GROUP" --name "$ACR_NAME" --sku Basic --admin-enabled true --output table
 
-# 3. Build Container Images in Azure Cloud via ACR Tasks
-echo "[3/6] Building Backend Container Image in ACR..."
-az acr build --registry "$ACR_NAME" --image damagescope-backend:latest ./backend --output table
+# 3. Login to ACR & Build/Push Container Images locally
+echo "[3/6] Logging into Azure Container Registry '$ACR_NAME'..."
+az acr login --name "$ACR_NAME"
 
-echo "[3/6] Building Frontend Container Image in ACR..."
-az acr build --registry "$ACR_NAME" --image damagescope-frontend:latest ./frontend --output table
+echo "[3/6] Building Backend Container Image locally..."
+docker build -t "$ACR_NAME.azurecr.io/damagescope-backend:latest" ./backend
+
+echo "[3/6] Pushing Backend Container Image to ACR..."
+docker push "$ACR_NAME.azurecr.io/damagescope-backend:latest"
+
+echo "[3/6] Building Frontend Container Image locally..."
+docker build -t "$ACR_NAME.azurecr.io/damagescope-frontend:latest" ./frontend
+
+echo "[3/6] Pushing Frontend Container Image to ACR..."
+docker push "$ACR_NAME.azurecr.io/damagescope-frontend:latest"
 
 # 4. Create App Service Plan
 echo "[4/6] Creating Linux App Service Plan '$APP_SERVICE_PLAN'..."
@@ -51,15 +60,16 @@ az webapp create \
   --multicontainer-config-file docker-compose.azure.rendered.yml \
   --output table
 
-# Configure Container Registry Credentials
+# Configure Container Registry Credentials & Timeout
 echo "[6/6] Configuring ACR credentials on Web App..."
-az webapp config container set \
+az webapp config appsettings set \
   --name "$APP_NAME" \
   --resource-group "$RESOURCE_GROUP" \
-  --docker-custom-image-name "$ACR_NAME.azurecr.io/damagescope-frontend:latest" \
-  --docker-registry-server-url "https://$ACR_NAME.azurecr.io" \
-  --docker-registry-server-user "$ACR_NAME" \
-  --docker-registry-server-password "$ACR_PASSWORD" \
+  --settings \
+    DOCKER_REGISTRY_SERVER_URL="https://$ACR_NAME.azurecr.io" \
+    DOCKER_REGISTRY_SERVER_USERNAME="$ACR_NAME" \
+    DOCKER_REGISTRY_SERVER_PASSWORD="$ACR_PASSWORD" \
+    WEBSITES_CONTAINER_START_TIME_LIMIT=1800 \
   --output table
 
 # Clean up rendered compose file

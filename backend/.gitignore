@@ -1,0 +1,10 @@
+venv/
+.venv/
+env/
+ENV/
+data/*.db
+data/*.sqlite
+uploads/*
+!uploads/.gitkeep
+__pycache__/
+*.pyc

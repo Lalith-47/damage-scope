@@ -94,7 +94,18 @@ Trained and benchmarked on the official **xBD Dataset** (Humanitarian OpenStreet
 | **True: Major Damage** | 2.1% | 12.6% | **78.9%** | 6.4% |
 | **True: Destroyed** | 0.4% | 1.1% | 7.0% | **91.5%** |
 
-#### Normalized Confusion Matrix Formula
+#### 📐 Normalized Confusion Matrix Mathematical Formula
+
+The row-normalized confusion matrix entry $C_{\text{norm}}(i, j)$ computes the conditional probability $P(\hat{Y} = j \mid Y = i)$, dividing each cell count $C(i, j)$ by the total sum of true ground-truth instances in row $i$:
+
+$$C_{\text{norm}}(i, j) = \left( \frac{C(i, j)}{\sum_{k=1}^{N} C(i, k)} \right) \times 100\%$$
+
+*Where:*
+- $C(i, j)$: Raw instance count of true class $i$ predicted as class $j$.
+- $\sum_{k=1}^{N} C(i, k)$: Total ground-truth instances belonging to row class $i$.
+- $N$: Total number of xBD damage categories ($N = 4$: `no-damage`, `minor-damage`, `major-damage`, `destroyed`).
+
+#### Normalized Benchmark Matrix Matrix ($\%$)
 $$\begin{pmatrix} \mathbf{True \setminus Pred} & \mathbf{No\ Damage} & \mathbf{Minor\ Damage} & \mathbf{Major\ Damage} & \mathbf{Destroyed} \\ \mathbf{No\ Damage} & \mathbf{93.4\%} & 5.2\% & 1.1\% & 0.3\% \\ \mathbf{Minor\ Damage} & 18.5\% & \mathbf{72.1\%} & 8.2\% & 1.2\% \\ \mathbf{Major\ Damage} & 2.1\% & 12.6\% & \mathbf{78.9\%} & 6.4\% \\ \mathbf{Destroyed} & 0.4\% & 1.1\% & 7.0\% & \mathbf{91.5\%} \end{pmatrix}$$
 
 #### Raw Normalized Confusion Matrix Array (%)

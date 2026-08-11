@@ -29,10 +29,14 @@ executor = ThreadPoolExecutor(max_workers=2)
 async def lifespan(app: FastAPI):
     # Initialize DB tables
     Base.metadata.create_all(bind=engine)
-    # Pre-load ONNX models once at startup
-    models_dir = os.path.join(os.path.dirname(__file__), "models")
-    ModelInferenceEngine.get_instance(models_dir)
     yield
+
+app = FastAPI(
+    title="DamageScope API",
+    description="Satellite Damage Assessment Engine",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
 allowed_origins = [origin.strip() for origin in os.getenv("ALLOWED_ORIGINS", "*").split(",") if origin.strip()]
 

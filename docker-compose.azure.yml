@@ -1,6 +1,15 @@
 version: '3.8'
 
 services:
+  frontend:
+    image: ${ACR_NAME}.azurecr.io/damagescope-frontend:latest
+    container_name: damagescope-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
   backend:
     image: ${ACR_NAME}.azurecr.io/damagescope-backend:latest
     container_name: damagescope-backend
@@ -12,12 +21,3 @@ services:
       - UPLOAD_DIR=/backend/uploads
       - MODELS_DIR=/backend/models
       - ALLOWED_ORIGINS=*
-
-  frontend:
-    image: ${ACR_NAME}.azurecr.io/damagescope-frontend:latest
-    container_name: damagescope-frontend
-    restart: always
-    ports:
-      - "80:80"
-    depends_on:
-      - backend

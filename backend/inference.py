@@ -23,7 +23,10 @@ class ModelInferenceEngine:
         self.models_dir = models_dir
         self.loc_session = None
         self.cls_session = None
-        self.load_models()
+
+    def ensure_models_loaded(self):
+        if self.loc_session is None or self.cls_session is None:
+            self.load_models()
 
     @classmethod
     def get_instance(cls, models_dir: str = None):
@@ -46,7 +49,7 @@ class ModelInferenceEngine:
 
         providers = ['CPUExecutionProvider']
         opts = ort.SessionOptions()
-        opts.intra_op_num_threads = 4
+        opts.intra_op_num_threads = 2
         opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
 
         print(f"Loading ONNX localization model from {loc_path}...")
@@ -105,33 +108,20 @@ class ModelInferenceEngine:
         return crop_pair.astype(np.float32)
 
     def generate_synthetic_buildings(self, count: int = 12) -> List[Dict[str, Any]]:
-        """
-        Fallback building polygon generator if image segmentation produces no contours.
-        """
         buildings = []
-        grid_rows = 3
-        grid_cols = 4
-        spacing_x = 1024 // (grid_cols + 1)
-        spacing_y = 1024 // (grid_rows + 1)
-
+        spacing_x = 1024 // 5
+        spacing_y = 1024 // 4
         idx = 1
-        np.random.seed(42)
-
-        for r in range(grid_rows):
-            for c in range(grid_cols):
-                cx = spacing_x * (c + 1) + np.random.randint(-20, 20)
-                cy = spacing_y * (r + 1) + np.random.randint(-20, 20)
-                w = np.random.randint(60, 100)
-                h = np.random.randint(50, 90)
-
-                polygon = [
-                    [cx - w // 2, cy - h // 2],
-                    [cx + w // 2, cy - h // 2],
-                    [cx + w // 2, cy + h // 2],
-                    [cx - w // 2, cy + h // 2]
-                ]
-                bbox = [cx - w // 2, cy - h // 2, cx + w // 2, cy + h // 2]
-                
+        for r in range(1, 4):
+            for c in range(1, 5):
+                if idx > count:
+                    break
+                cx, cy = spacing_x * c, spacing_y * r
+                w, h = 84, 74
+                x1, y1 = cx - w // 2, cy - h // 2
+                x2, y2 = cx + w // 2, cy + h // 2
+                polygon = [[x1, y1], [x2, y1], [x2, y2], [x1, y2]]
+                bbox = [x1, y1, x2, y2]
                 buildings.append({
                     "id": idx,
                     "polygon": polygon,
@@ -141,6 +131,7 @@ class ModelInferenceEngine:
         return buildings
 
     def run_assessment(self, pre_path: str, post_path: str) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
+        self.ensure_models_loaded()
         pre_tensor, pre_rgb = self.preprocess_image(pre_path)
         post_tensor, post_rgb = self.preprocess_image(post_path)
 
@@ -153,9 +144,8 @@ class ModelInferenceEngine:
         if mask_raw.shape != (1024, 1024):
             mask_raw = cv2.resize(mask_raw, (1024, 1024))
 
-        # Sigmoid thresholding for raw logits
-        prob_mask = 1.0 / (1.0 + np.exp(-mask_raw))
-        mask_binary = (prob_mask > 0.4).astype(np.uint8) * 255
+        # Direct logit thresholding (equivalent to sigmoid(mask_raw) > 0.4)
+        mask_binary = (mask_raw > -0.4054).astype(np.uint8) * 255
 
         # Find Contours
         contours, _ = cv2.findContours(mask_binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -205,22 +195,30 @@ class ModelInferenceEngine:
             cls_probs = exp_logits / np.sum(exp_logits, axis=0, keepdims=True)  # [5, 1024, 1024]
 
             for b in raw_buildings:
-                c_mask = np.zeros((1024, 1024), dtype=np.uint8)
-                if "contour" in b:
-                    cv2.drawContours(c_mask, [b["contour"]], -1, 1, -1)
-                else:
-                    x1, y1, x2, y2 = b["bbox"]
-                    c_mask[y1:y2, x1:x2] = 1
-
-                b_pixels = c_mask == 1
                 x1, y1, x2, y2 = b["bbox"]
+                x1, y1 = max(0, int(x1)), max(0, int(y1))
+                x2, y2 = min(1024, int(x2)), min(1024, int(y2))
+                h_crop, w_crop = y2 - y1, x2 - x1
+
                 crop_pre = pre_rgb[y1:y2, x1:x2].astype(float)
                 crop_post = post_rgb[y1:y2, x1:x2].astype(float)
                 diff = float(np.mean(np.abs(crop_pre - crop_post)) / 255.0) if crop_pre.size > 0 else 0.0
 
-                if np.sum(b_pixels) > 0:
-                    # Channels 1..4 map to damage classes ('no-damage', 'minor-damage', 'major-damage', 'destroyed')
-                    onnx_probs = [float(cls_probs[ch][b_pixels].mean()) for ch in range(1, 5)]
+                if h_crop > 0 and w_crop > 0:
+                    c_mask_crop = np.zeros((h_crop, w_crop), dtype=np.uint8)
+                    if "contour" in b:
+                        cnt_shifted = b["contour"] - np.array([x1, y1])
+                        cv2.drawContours(c_mask_crop, [cnt_shifted], -1, 1, -1)
+                    else:
+                        c_mask_crop[:, :] = 1
+
+                    b_pixels_crop = c_mask_crop == 1
+                    crop_cls = cls_probs[:, y1:y2, x1:x2]
+
+                    if np.sum(b_pixels_crop) > 0:
+                        onnx_probs = [float(crop_cls[ch][b_pixels_crop].mean()) for ch in range(1, 5)]
+                    else:
+                        onnx_probs = [0.25, 0.25, 0.25, 0.25]
                 else:
                     onnx_probs = [0.25, 0.25, 0.25, 0.25]
 

@@ -37,64 +37,60 @@ export default function HeroSection({ onLaunchConsole, onRunSample }) {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 space-y-6 text-center lg:text-left"
           >
-            {/* Tag Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 backdrop-blur-md shadow-lg shadow-cyan-950/40">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
-              </span>
-              <span className="font-mono text-xs font-bold text-cyan-300 tracking-wider uppercase">
-                SAMSUNG CAPSTONE PROJECT &bull; DISASTER RESPONSE
+            {/* HUD Status Pill */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-lg">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="font-mono text-xs font-medium text-primary tracking-wide">
+                Dual-Stage UNet Pipeline • 1024x1024 Resolution • Real-Time Tensor Inference
               </span>
             </div>
 
-            {/* Main Confident Headline */}
-            <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
-              Automated Satellite <br />
-              <span className="text-gradient-amber">Building Damage</span> <br />
-              Assessment System.
+            {/* Main Headline */}
+            <h1 className="font-headline text-4xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-on-surface leading-[1.08]">
+              AI-Powered Structural <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-fixed-dim to-secondary">
+                Damage Assessment
+              </span> <br />
+              in Seconds.
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Rapidly detects, segments, and classifies structural damage across post-disaster satellite imagery. 
-              Powered by dual-stage UNet neural networks, xBD 4-tier severity taxonomy, 
-              and automated disaster PDF report generation.
+            <p className="font-body text-base sm:text-lg text-on-surface-variant font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              Upload pre- and post-disaster imagery to instantly detect structural compromises, generate pixel-precise damage segmentation masks, and receive actionable repair recommendations.
             </p>
 
             {/* CTA Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
               <button
                 onClick={onLaunchConsole}
-                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-amber-500 text-white font-mono text-sm font-bold shadow-xl shadow-cyan-950/60 hover:shadow-cyan-500/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 group cursor-pointer"
+                className="w-full sm:w-auto px-8 py-4 rounded-lg bg-primary-container text-on-primary-container font-mono text-sm font-semibold glow-cyan hover:bg-primary transition-all active:scale-95 flex items-center justify-center gap-3 group cursor-pointer"
               >
-                <Zap className="w-5 h-5 text-amber-300 group-hover:animate-bounce" />
-                <span>OPEN ASSESSMENT CONSOLE</span>
+                <span>Start Assessment</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
               <button
                 onClick={onRunSample}
-                className="w-full sm:w-auto px-6 py-4 rounded-xl bg-slate-900/90 hover:bg-slate-850 text-slate-200 border border-slate-700 hover:border-cyan-500/50 font-mono text-sm font-bold transition-all flex items-center justify-center gap-2 group cursor-pointer"
+                className="w-full sm:w-auto px-8 py-4 rounded-lg bg-transparent border border-primary text-primary font-mono text-sm font-semibold hover:bg-primary/10 transition-all active:scale-95 flex items-center justify-center gap-2 group cursor-pointer"
               >
-                <Play className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
-                <span>RUN DEMO SATELLITE PAIR</span>
+                <Play className="w-4 h-4 fill-primary group-hover:scale-110 transition-transform" />
+                <span>Watch Interactive Demo</span>
               </button>
             </div>
 
             {/* Metric Highlights Pills */}
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80 font-mono">
+            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-outline-variant/30 font-mono">
               <div>
-                <div className="text-xl sm:text-2xl font-black text-white">1024x1024</div>
-                <div className="text-[11px] text-slate-400">Satellite Imagery</div>
+                <div className="text-xl sm:text-2xl font-bold text-on-surface">1024x1024</div>
+                <div className="text-[11px] text-on-surface-variant">Input Resolution</div>
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-black text-cyan-400">85.2%</div>
-                <div className="text-[11px] text-slate-400">xBD Accuracy</div>
+                <div className="text-xl sm:text-2xl font-bold text-primary">4-Tier</div>
+                <div className="text-[11px] text-on-surface-variant">xBD Taxonomy</div>
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-black text-amber-400">&lt; 1.5s</div>
-                <div className="text-[11px] text-slate-400">Inference Latency</div>
+                <div className="text-xl sm:text-2xl font-bold text-secondary">ONNX</div>
+                <div className="text-[11px] text-on-surface-variant">Tensor Engine</div>
               </div>
             </div>
           </motion.div>

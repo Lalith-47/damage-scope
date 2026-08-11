@@ -8,31 +8,64 @@ export default {
   theme: {
     extend: {
       colors: {
+        surface: {
+          DEFAULT: 'var(--color-surface-bg)',
+          dim: 'var(--color-surface-bg)',
+          bright: '#31394d',
+          container: 'var(--color-surface-container)',
+          'container-low': '#131b2e',
+          'container-high': 'var(--color-surface-container-high)',
+          'container-highest': '#2d3449',
+          'container-lowest': 'var(--color-surface-container-lowest)',
+        },
+        primary: {
+          DEFAULT: 'var(--color-primary-text)',
+          container: '#22d3ee',
+          fixed: '#a2eeff',
+          dim: '#2fd9f4',
+        },
+        secondary: {
+          DEFAULT: 'var(--color-secondary)',
+          container: '#00a572',
+        },
+        on: {
+          surface: 'var(--color-on-surface)',
+          'surface-variant': 'var(--color-on-surface-variant)',
+          primary: '#00363e',
+          'primary-container': '#005763',
+          secondary: '#003824',
+        },
+        outline: {
+          DEFAULT: '#859397',
+          variant: '#3c494c',
+        },
         slate: {
-          950: '#060913',
-          900: '#0b1120',
-          850: '#121a2d',
-          800: '#1c283f',
-          750: '#263654',
-          700: '#324669',
+          950: '#0b1326',
+          900: '#131b2e',
+          850: '#171f33',
+          800: '#222a3d',
+          750: '#2d3449',
+          700: '#3c494c',
         },
         brand: {
           amber: '#f97316',
-          cyan: '#06b6d4',
+          cyan: '#22d3ee',
           red: '#ef4444',
-          emerald: '#10b981',
-          accent: '#0284c7'
+          emerald: '#4edea3',
+          accent: '#22d3ee'
         },
         damage: {
-          green: '#22c55e',
+          green: '#4edea3',
           yellow: '#eab308',
           orange: '#f97316',
           red: '#ef4444',
         }
       },
       fontFamily: {
+        headline: ['Geist', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'Roboto Mono', 'monospace'],
-        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Geist', 'Inter', 'system-ui', 'sans-serif'],
       },
       animation: {
         'marquee': 'marquee 25s linear infinite',

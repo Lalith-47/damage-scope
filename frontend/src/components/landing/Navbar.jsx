@@ -33,8 +33,8 @@ export default function Navbar({ onLaunchConsole, activeView, setActiveView, the
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-slate-950/85 backdrop-blur-xl border-b border-slate-800/80 shadow-2xl py-3'
-          : 'bg-transparent py-5'
+          ? 'bg-surface/85 backdrop-blur-md border-b border-outline-variant/30 shadow-lg py-3'
+          : 'bg-surface/60 backdrop-blur-md border-b border-outline-variant/20 py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,77 +44,72 @@ export default function Navbar({ onLaunchConsole, activeView, setActiveView, the
             onClick={() => setActiveView('landing')}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 via-blue-600 to-amber-500 p-[1px] shadow-lg shadow-cyan-950/50 group-hover:scale-105 transition-transform duration-300">
-              <div className="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center">
-                <Shield className="w-5 h-5 text-cyan-400 group-hover:text-amber-400 transition-colors" />
-              </div>
+            <div className="relative w-9 h-9 rounded-lg bg-primary-container/20 border border-primary/40 flex items-center justify-center glow-cyan transition-transform group-hover:scale-105">
+              <Shield className="w-5 h-5 text-primary" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-lg font-black tracking-wider text-white font-mono">
-                  DAMAGE<span className="text-cyan-400">SCOPE</span>
+                <span className="text-xl font-bold tracking-tighter text-primary font-headline">
+                  DamageScope
                 </span>
-                <span className="px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-800/80 text-[10px] font-mono font-bold uppercase tracking-widest">
-                  CAPSTONE
+                <span className="px-2 py-0.5 rounded bg-primary-container/20 text-primary border border-primary/30 text-[10px] font-mono font-medium uppercase tracking-widest">
+                  HUD
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 font-mono tracking-tight hidden sm:block">
-                Satellite Disaster Intelligence Platform
-              </p>
             </div>
           </div>
 
           {/* Nav Anchors */}
-          <nav className="hidden md:flex items-center gap-6 font-mono text-xs text-slate-300">
+          <nav className="hidden md:flex items-center gap-8 font-body text-sm text-on-surface-variant">
             <button
               onClick={() => scrollToSection('features')}
-              className="hover:text-cyan-400 transition-colors py-1 relative group"
+              className="hover:text-primary transition-colors py-1 relative group"
             >
-              CAPABILITIES
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
+              Features
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-300" />
             </button>
 
             <button
               onClick={() => scrollToSection('how-it-works')}
-              className="hover:text-cyan-400 transition-colors py-1 relative group"
+              className="hover:text-primary transition-colors py-1 relative group"
             >
-              WORKFLOW
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
+              How It Works
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-300" />
             </button>
 
             <button
               onClick={() => scrollToSection('preview')}
-              className="hover:text-cyan-400 transition-colors py-1 relative group"
+              className="hover:text-primary transition-colors py-1 relative group"
             >
-              LIVE DEMO
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
+              Dashboard Preview
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-300" />
             </button>
 
             <button
               onClick={() => scrollToSection('stats')}
-              className="hover:text-cyan-400 transition-colors py-1 relative group"
+              className="hover:text-primary transition-colors py-1 relative group"
             >
-              BENCHMARKS
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
+              Analytics
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-300" />
             </button>
           </nav>
 
           {/* Right Action Buttons */}
           <div className="flex items-center gap-3">
-            <div className="hidden lg:flex items-center gap-2 font-mono text-[11px] text-slate-400 bg-slate-900/90 px-3 py-1.5 rounded-lg border border-slate-800">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Inference Engine Ready</span>
+            <div className="hidden lg:flex items-center gap-2 font-mono text-xs text-on-surface-variant bg-surface-container/60 px-3 py-1.5 rounded border border-outline-variant/30">
+              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+              <span>Tensor Processing Active</span>
             </div>
 
             {/* Theme Toggle Button */}
             <button
               onClick={onToggleTheme}
-              className="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-amber-400 transition-all flex items-center justify-center cursor-pointer shadow-md"
+              className="p-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant hover:text-primary transition-all flex items-center justify-center cursor-pointer shadow-sm"
               title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
               aria-label="Toggle Theme"
             >
               {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-amber-400 hover:rotate-45 transition-transform" />
+                <Sun className="w-4 h-4 text-primary hover:rotate-45 transition-transform" />
               ) : (
                 <Moon className="w-4 h-4 text-cyan-600 hover:scale-110 transition-transform" />
               )}
@@ -122,14 +117,11 @@ export default function Navbar({ onLaunchConsole, activeView, setActiveView, the
 
             <button
               onClick={onLaunchConsole}
-              className="relative group overflow-hidden rounded-xl p-[1px] font-mono text-xs font-bold"
+              className="bg-cyan-600 hover:bg-cyan-700 text-white dark:bg-primary-container dark:text-on-primary-container font-mono text-xs font-semibold px-4 py-2 rounded glow-cyan-hover transition-all active:scale-95 duration-100 flex items-center gap-2 shadow-sm"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-600 to-amber-500 rounded-xl group-hover:opacity-90 transition-opacity" />
-              <span className="relative px-4 py-2 bg-slate-950 rounded-[11px] flex items-center gap-2 text-white group-hover:bg-slate-900 transition-colors">
-                <Terminal className="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
-                <span>OPEN CONSOLE</span>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
-              </span>
+              <Terminal className="w-4 h-4" />
+              <span>Launch Assessment Console</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

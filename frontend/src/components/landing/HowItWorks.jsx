@@ -41,22 +41,22 @@ export default function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section id="how-it-works" className="py-24 relative overflow-hidden font-mono bg-slate-950/60">
+    <section id="how-it-works" className="py-24 relative overflow-hidden font-mono bg-surface-container-lowest/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold uppercase tracking-widest">
-            <span>PIPELINE SEQUENCE</span>
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4 font-sans">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-surface-container border border-outline-variant/30 text-primary text-xs font-mono font-medium uppercase tracking-widest">
+            <span>Pipeline Sequence</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h2 className="font-headline text-3xl sm:text-5xl font-bold text-on-surface tracking-tight">
             How DamageScope Processes <br />
-            <span className="text-gradient-amber">Disaster Telemetry.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Disaster Telemetry.</span>
           </h2>
 
-          <p className="text-slate-400 text-sm sm:text-base font-sans leading-relaxed">
-            Four seamless operational stages powered by custom ONNX neural weights and automated recovery rules.
+          <p className="text-on-surface-variant text-sm sm:text-base leading-relaxed">
+            Four seamless operational stages powered by custom neural weights and automated recovery rules.
           </p>
         </div>
 
@@ -66,29 +66,28 @@ export default function HowItWorks() {
           {/* Left Step Selectors List */}
           <div className="lg:col-span-5 space-y-4">
             {STEPS.map((step, idx) => {
-              const Icon = step.icon;
               const isActive = activeStep === idx;
               return (
                 <div
                   key={idx}
                   onClick={() => setActiveStep(idx)}
-                  className={`p-5 rounded-2xl border transition-all cursor-pointer flex items-start gap-4 ${
+                  className={`p-5 rounded-xl border transition-all cursor-pointer flex items-start gap-4 ${
                     isActive
-                      ? 'glass-card border-cyan-500/80 shadow-glow-cyan bg-slate-900/90'
-                      : 'bg-slate-900/40 border-slate-800/80 hover:border-slate-700 text-slate-400'
+                      ? 'glass-panel border-primary/80 glow-cyan bg-surface-container-high'
+                      : 'bg-surface-container/40 border-outline-variant/20 hover:border-outline-variant/50 text-on-surface-variant'
                   }`}
                 >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm flex-shrink-0 transition-colors ${
-                    isActive ? 'bg-cyan-500 text-black' : 'bg-slate-950 text-slate-500 border border-slate-800'
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm flex-shrink-0 transition-colors ${
+                    isActive ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30'
                   }`}>
                     {step.num}
                   </div>
 
                   <div>
-                    <h3 className={`text-base font-bold transition-colors ${isActive ? 'text-white' : 'text-slate-300'}`}>
+                    <h3 className={`font-headline text-base font-bold transition-colors ${isActive ? 'text-on-surface' : 'text-on-surface-variant'}`}>
                       {step.title}
                     </h3>
-                    <p className="text-xs text-slate-500 mt-1">{step.subtitle}</p>
+                    <p className="text-xs text-on-surface-variant/70 mt-1">{step.subtitle}</p>
                   </div>
                 </div>
               );
@@ -102,33 +101,33 @@ export default function HowItWorks() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="glass-card rounded-2xl p-8 border border-slate-700/80 relative overflow-hidden"
+              className="glass-panel rounded-xl p-8 border border-white/10 relative overflow-hidden"
             >
-              <div className="flex items-center justify-between pb-6 mb-6 border-b border-slate-800">
+              <div className="flex items-center justify-between pb-6 mb-6 border-b border-white/10">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-700 flex items-center justify-center">
-                    {React.createElement(STEPS[activeStep].icon, { className: "w-6 h-6 text-cyan-400" })}
+                  <div className="w-12 h-12 rounded-lg bg-surface-container border border-primary/40 flex items-center justify-center">
+                    {React.createElement(STEPS[activeStep].icon, { className: "w-6 h-6 text-primary" })}
                   </div>
                   <div>
-                    <span className="text-[10px] text-cyan-400 font-bold tracking-widest block">STAGE {STEPS[activeStep].num} OF 04</span>
-                    <h3 className="text-xl font-bold text-white">{STEPS[activeStep].title}</h3>
+                    <span className="text-[10px] text-primary font-mono font-medium tracking-widest block">STAGE {STEPS[activeStep].num} OF 04</span>
+                    <h3 className="font-headline text-xl font-bold text-on-surface">{STEPS[activeStep].title}</h3>
                   </div>
                 </div>
 
-                <span className="px-3 py-1 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-bold">
+                <span className="px-3 py-1 rounded bg-primary-container/20 text-primary border border-primary/30 text-xs font-mono font-medium">
                   ACTIVE
                 </span>
               </div>
 
-              <p className="text-slate-300 text-sm font-sans leading-relaxed mb-6">
+              <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-6">
                 {STEPS[activeStep].description}
               </p>
 
-              <div className="space-y-3 pt-4 border-t border-slate-800">
-                <span className="text-[11px] text-slate-400 uppercase font-bold tracking-wider block">KEY TECHNICAL DELIVERABLES:</span>
+              <div className="space-y-3 pt-4 border-t border-white/10">
+                <span className="text-[11px] text-on-surface-variant/70 uppercase font-mono font-medium tracking-wider block">KEY TECHNICAL DELIVERABLES:</span>
                 {STEPS[activeStep].details.map((detail, dIdx) => (
-                  <div key={dIdx} className="flex items-center gap-2 text-xs text-slate-200">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                  <div key={dIdx} className="flex items-center gap-2 text-xs font-body text-on-surface">
+                    <CheckCircle2 className="w-4 h-4 text-secondary flex-shrink-0" />
                     <span>{detail}</span>
                   </div>
                 ))}
